@@ -17,7 +17,7 @@ data class MasterProductEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", insertable = false, updatable = false)
-    var id: Int = 0,
+    var id: Int,
 
     @Column(name = "name")
     var name: String,
