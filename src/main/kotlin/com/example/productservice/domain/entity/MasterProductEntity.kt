@@ -9,15 +9,24 @@ import jakarta.persistence.SequenceGenerator
 import jakarta.persistence.Table
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
+import java.math.BigDecimal
 import java.sql.Timestamp
 
 @Entity
 @Table(name = "mst_products")
 data class MasterProductEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "mst_products_id_seq"
+    )
+    @SequenceGenerator(
+        name = "mst_products_id_seq", // name used in @GeneratedValue
+        sequenceName = "mst_products_id_seq", // name of sequence in DB
+        allocationSize = 1 // adjust based on how your DB increments
+    )
     @Column(name = "id", insertable = false, updatable = false)
-    var id: Int,
+    var id: Int? = 0,
 
     @Column(name = "name")
     var name: String,
@@ -26,7 +35,7 @@ data class MasterProductEntity(
     var description: String,
 
     @Column(name = "price")
-    var price: Double,
+    var price: BigDecimal,
 
     @Column(name = "stock_quantity")
     var stockQuantity: Int = 0,
